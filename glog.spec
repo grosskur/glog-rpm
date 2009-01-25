@@ -1,13 +1,13 @@
 Name:           glog
-Version:        0.1.2
-Release:        6%{?dist}
+Version:        0.2
+Release:        2%{?dist}
 Summary:        A C++ application logging library
 
 Group:          System Environment/Libraries
 License:        BSD
 URL:            http://code.google.com/p/google-glog
 Source0:        http://google-glog.googlecode.com/files/%{name}-%{version}.tar.gz
-Patch0:         glog-lpthread.patch
+Patch0:         glog-r38.patch
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:  autoconf
@@ -69,6 +69,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Jan 25 2009 John A. Khvatov <ivaxer@fedoraproject.org> 0.2-2
+- update to 0.2
+
 * Thu Dec 4 2008 John A. Khvatov <ivaxer@fedoraproject.org> 0.1.2-6
 - fix %%{_includedir}
 - fixed documentation
