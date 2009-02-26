@@ -1,6 +1,6 @@
 Name:           glog
 Version:        0.2
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A C++ application logging library
 
 Group:          System Environment/Libraries
@@ -8,7 +8,7 @@ License:        BSD
 URL:            http://code.google.com/p/google-glog
 Source0:        http://google-glog.googlecode.com/files/%{name}-%{version}.tar.gz
 Patch0:         glog-r38.patch
-Patch1:         glog-missing-header.patch
+Patch1:         glog-gcc4.4.patch
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:  autoconf
@@ -70,8 +70,8 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Fri Feb 27 2009 John A. Khvatov <ivaxer@fedoraproject.org> 0.2-4
-- Added missing header for gcc 4.4
+* Fri Feb 27 2009 John A. Khvatov <ivaxer@fedoraproject.org> 0.2-5
+- fixes for gcc 4.4
 
 * Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
