@@ -1,6 +1,6 @@
 Name:           glog
 Version:        0.3.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A C++ application logging library
 
 Group:          System Environment/Libraries
@@ -41,6 +41,7 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+rm -rf $RPM_BUILD_ROOT/%{_docdir}/%{name}-%{version}
 
 
 %clean
@@ -67,6 +68,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Aug 05 2013 John Khvatov <ivaxer@fedoraproject.org> - 0.3.3-3
+- Removed installed but untracked docs.
+   Fix for https://fedoraproject.org/wiki/Changes/UnversionedDocdirs
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.3.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
