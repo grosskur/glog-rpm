@@ -1,16 +1,34 @@
-Name:           glog
-Version:        0.3.3
-Release:        3%{?dist}
+%global p_vendor         hhvm
+%define _name            glog
+
+%if 0%{?p_vendor:1}
+  %global _orig_prefix   %{_prefix}
+  %global name_prefix    %{p_vendor}-
+
+  # Use the alternate locations for things.
+  %define _lib            lib 
+  %global _real_initrddir %{_initrddir}
+  %global _sysconfdir     %{_sysconfdir}/hhvm
+  %define _prefix         /opt/hhvm
+  %define _libdir         %{_prefix}/lib
+  %define _mandir         %{_datadir}/man
+%endif
+
+Name:           %{?name_prefix}%{_name}
+Version:        0.3.2
+Release:        3.hhvm%{?dist}
 Summary:        A C++ application logging library
 
 Group:          System Environment/Libraries
 License:        BSD
 URL:            http://code.google.com/p/google-glog
-Source0:        http://google-glog.googlecode.com/files/%{name}-%{version}.tar.gz
+Source0:        http://google-glog.googlecode.com/files/%{_name}-%{version}.tar.gz
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:  autoconf
 #Requires:       
+# Don't provide un-namespaced libraries inside rpm database
+AutoReqProv: 0
 
 %description
 Google glog is a library that implements application-level
@@ -22,6 +40,8 @@ streams and various helper macros.
 Summary:        Development files for %{name}
 Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
+# Don't provide un-namespaced libraries inside rpm database
+AutoReqProv: 0
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -29,7 +49,7 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q
+%setup -q -n %{_name}-%{version}
 
 %build
 autoconf
@@ -41,7 +61,7 @@ make %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
-rm -rf $RPM_BUILD_ROOT/%{_docdir}/%{name}-%{version}
+rm -rf $RPM_BUILD_ROOT/%{_datadir}/doc/%{_name}-%{version}
 
 
 %clean
